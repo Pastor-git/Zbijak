@@ -15,22 +15,22 @@ public class Player implements Moves{
 
     @Override
     public void up() {
-        x =+ 1;
+        setX(x - 1);
     }
 
     @Override
     public void down() {
-        x =- 1;
+        setX(x + 1);
     }
 
     @Override
     public void left() {
-        y =- 1;
+        setY(y - 1);
     }
 
     @Override
     public void right() {
-        y =+ 1;
+        setY(y + 1);
     }
 
     public boolean isLife() {
