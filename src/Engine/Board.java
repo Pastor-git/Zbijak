@@ -17,14 +17,14 @@ public class Board {
         int coordinate_y = coordinates.nextInt(7);
         System.out.println("losowa pozyjca gracza: " + coordinate_x + " " + coordinate_y);
 
-        Player gracz = new Player (true, "P", coordinate_x, coordinate_y);
+        Player gracz = new Player (true, "X", coordinate_x, coordinate_y);
 
         planszapoziom[gracz.x][gracz.y] = gracz.name;
 
 
         for(int i = 0; i <planszapoziom.length; i++) {
-            Object [] planszapion = planszapoziom[i];
-            for (int j = 0; j< planszapion.length; j++) {
+
+            for (int j = 0; j< planszapoziom.length; j++) {
 
                 if (planszapoziom[i][j] == null) {
                     planszapoziom[i][j] = "O";
