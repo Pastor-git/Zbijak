@@ -12,16 +12,29 @@ public class Board {
         Random coordinates = new Random();
         Scanner move = new Scanner(System.in);
 
-
-        int coordinate_x = coordinates.nextInt(7);
-        int coordinate_y = coordinates.nextInt(7);
-        System.out.println("startowa pozyjca gracza: " + coordinate_x + " " + coordinate_y);
-
-        Player gracz = new Player(true, "X", coordinate_x, coordinate_y);
-
         System.out.println("Zbij wszystkich przeciwników: ");
         System.out.println("1 - up, 2 - down, 3 - left, 4 - right");
 
+        int coordinate_x = coordinates.nextInt(8);
+        int coordinate_y = coordinates.nextInt(8);
+        System.out.println("startowa pozyjca gracza: " + coordinate_x + " " + coordinate_y);
+        Player gracz = new Player(true, "X", coordinate_x, coordinate_y);
+
+        int coordinate_K1x;
+        int coordinate_K1y;
+
+        do {
+            coordinate_K1x = coordinates.nextInt(8);
+        } while (coordinate_K1x == gracz.x);
+        do {
+            coordinate_K1y = coordinates.nextInt(8);
+        } while (coordinate_K1y == gracz.y);
+        Player komputer1 = new Player(true, "K", coordinate_K1x, coordinate_K1y);
+
+
+
+
+        planszapoziom[komputer1.x][komputer1.y] = komputer1.name;
         planszapoziom[gracz.x][gracz.y] = gracz.name;
 
         for (int i = 0; i < planszapoziom.length; i++) {
@@ -37,8 +50,12 @@ public class Board {
             System.out.println();
         }
 
+        int komputer1_ruch;
+        int decyzja;
+
         do {
-            int decyzja = move.nextInt();
+
+            decyzja = move.nextInt();
 
             switch (decyzja) {
                 case 1:
@@ -48,7 +65,6 @@ public class Board {
                     gracz.down();
                     System.out.println("Wyszedłeś poza planszę - straciłeś ruch");
                     }
-                    planszapoziom[gracz.x][gracz.y] = gracz.name;
                     break;
                 case 2:
                     planszapoziom[gracz.x][gracz.y] = null;
@@ -57,7 +73,6 @@ public class Board {
                         gracz.up();
                         System.out.println("Wyszedłeś poza planszę - straciłeś ruch");
                     }
-                    planszapoziom[gracz.x][gracz.y] = gracz.name;
                     break;
                 case 3:
                     planszapoziom[gracz.x][gracz.y] = null;
@@ -66,7 +81,6 @@ public class Board {
                         gracz.right();
                         System.out.println("Wyszedłeś poza planszę - straciłeś ruch");
                     }
-                    planszapoziom[gracz.x][gracz.y] = gracz.name;
                     break;
                 case 4:
                     planszapoziom[gracz.x][gracz.y] = null;
@@ -75,12 +89,78 @@ public class Board {
                         gracz.left();
                         System.out.println("Wyszedłeś poza planszę - straciłeś ruch");
                     }
-                    planszapoziom[gracz.x][gracz.y] = gracz.name;
                     break;
                 default:
                     System.out.println("zła liczba wybierz jescze raz");
                     break;
             }
+
+            komputer1_ruch = coordinates.nextInt(5);
+            System.out.println(komputer1_ruch);
+            if (komputer1.life) {
+
+                if (komputer1_ruch == 1) {
+
+                    planszapoziom[komputer1.x][komputer1.y] = null;
+                    komputer1.up();
+                    if (komputer1.x < 0 || komputer1.x > 7 || komputer1.y < 0 || komputer1.y > 7) {
+                        komputer1.down();
+                    }
+                }
+
+                 else if (komputer1_ruch == 2) {
+                    planszapoziom[komputer1.x][komputer1.y] = null;
+                    komputer1.down();
+                    if (komputer1.x < 0 || komputer1.x > 7 || komputer1.y < 0 || komputer1.y > 7) {
+                        komputer1.up();
+                    }
+                }
+                else if (komputer1_ruch == 3) {
+                    planszapoziom[komputer1.x][komputer1.y] = null;
+                    komputer1.left();
+                    if (komputer1.x < 0 || komputer1.x > 7 || komputer1.y < 0 || komputer1.y > 7) {
+                        komputer1.right();
+                    }
+                }
+                else if (komputer1_ruch == 4) {
+                    planszapoziom[komputer1.x][komputer1.y] = null;
+                    komputer1.right();
+                    if (komputer1.x < 0 || komputer1.x > 7 || komputer1.y < 0 || komputer1.y > 7) {
+                        komputer1.left();
+                    }
+
+                }
+                else {
+                System.out.println("Komupter1 już nie żyje");
+                }
+
+                }
+                ///////TEST
+                for (int i = 0; i < planszapoziom.length; i++) {
+
+                    for (int j = 0; j < planszapoziom.length; j++) {
+
+                        if (planszapoziom[i][j] == null) {
+                            planszapoziom[i][j] = "O";
+                        }
+                        System.out.print(planszapoziom[i][j] + " ");
+
+                    }
+                    System.out.println();
+                }
+                ////////TEST
+                System.out.println("pozycja gracza " + gracz.x + " " + gracz.y);
+                System.out.println("pozycja komputera " + komputer1.x + " " + komputer1.y);
+
+
+            if (komputer1.x == gracz.x && komputer1.y == gracz.y) {
+                komputer1.setLife(false);
+            }
+            else {
+                planszapoziom[komputer1.x][komputer1.y] = komputer1.name;
+            }
+
+            planszapoziom[gracz.x][gracz.y] = gracz.name;
 
                 for (int i = 0; i < planszapoziom.length; i++) {
 
@@ -97,6 +177,7 @@ public class Board {
 
 
             }
-            while (gracz.life = true) ;
+            while (komputer1.life = true);
+            System.out.println("Koniec Gry");
         }
     }
