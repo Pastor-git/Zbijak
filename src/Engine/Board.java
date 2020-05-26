@@ -37,6 +37,10 @@ public class Board {
         planszapoziom[komputer1.x][komputer1.y] = komputer1.name;
         planszapoziom[gracz.x][gracz.y] = gracz.name;
 
+//        TEST
+//        komputer1.death();
+//        System.out.println(komputer1.life + " zabiłeś komuter1");
+
         for (int i = 0; i < planszapoziom.length; i++) {
 
             for (int j = 0; j < planszapoziom.length; j++) {
@@ -53,7 +57,7 @@ public class Board {
         int komputer1_ruch;
         int decyzja;
 
-        do {
+        while (komputer1.life) {
 
             decyzja = move.nextInt();
 
@@ -94,10 +98,18 @@ public class Board {
                     System.out.println("zła liczba wybierz jescze raz");
                     break;
             }
+            if (komputer1.x == gracz.x && komputer1.y == gracz.y) {
+                komputer1.death();
+                System.out.println("zabiłeś komuter1");
+            }
+            else {
 
-            komputer1_ruch = coordinates.nextInt(5);
-            System.out.println(komputer1_ruch);
+
+
             if (komputer1.life) {
+                komputer1_ruch = coordinates.nextInt(5);
+                System.out.println(komputer1_ruch);
+
 
                 if (komputer1_ruch == 1) {
 
@@ -131,34 +143,30 @@ public class Board {
 
                 }
                 else {
-                System.out.println("Komupter1 już nie żyje");
+                    System.out.println("komputer1 umarł");
                 }
 
                 }
+                planszapoziom[komputer1.x][komputer1.y] = komputer1.name;
+            }
                 ///////TEST
-                for (int i = 0; i < planszapoziom.length; i++) {
-
-                    for (int j = 0; j < planszapoziom.length; j++) {
-
-                        if (planszapoziom[i][j] == null) {
-                            planszapoziom[i][j] = "O";
-                        }
-                        System.out.print(planszapoziom[i][j] + " ");
-
-                    }
-                    System.out.println();
-                }
+//                for (int i = 0; i < planszapoziom.length; i++) {
+//
+//                    for (int j = 0; j < planszapoziom.length; j++) {
+//
+//                        if (planszapoziom[i][j] == null) {
+//                            planszapoziom[i][j] = "O";
+//                        }
+//                        System.out.print(planszapoziom[i][j] + " ");
+//
+//                    }
+//                    System.out.println();
+//                }
                 ////////TEST
                 System.out.println("pozycja gracza " + gracz.x + " " + gracz.y);
                 System.out.println("pozycja komputera " + komputer1.x + " " + komputer1.y);
 
 
-            if (komputer1.x == gracz.x && komputer1.y == gracz.y) {
-                komputer1.setLife(false);
-            }
-            else {
-                planszapoziom[komputer1.x][komputer1.y] = komputer1.name;
-            }
 
             planszapoziom[gracz.x][gracz.y] = gracz.name;
 
@@ -177,7 +185,7 @@ public class Board {
 
 
             }
-            while (komputer1.life = true);
+
             System.out.println("Koniec Gry");
         }
     }

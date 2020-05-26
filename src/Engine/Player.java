@@ -37,8 +37,8 @@ public class Player implements Moves{
         return life;
     }
 
-    public void setLife(boolean life) {
-        this.life = life;
+    public void death() {
+        this.life = false;
     }
 
     public int getX() {
