@@ -43,10 +43,21 @@ public class Board {
         } while (coordinate_K2y == gracz.y || coordinate_K2y == coordinate_K1y);
         Player komputer2 = new Player(true, "K", coordinate_K2x, coordinate_K2y);
 
+        int coordinate_K3x;
+        int coordinate_K3y;
+
+        do {
+            coordinate_K3x = coordinates.nextInt(8);
+        } while (coordinate_K3x == gracz.x || coordinate_K3x == coordinate_K1x || coordinate_K3x == coordinate_K2x);
+        do {
+            coordinate_K3y = coordinates.nextInt(8);
+        } while (coordinate_K3y == gracz.y || coordinate_K3y == coordinate_K1y || coordinate_K3y == coordinate_K2y);
+        Player komputer3 = new Player(true, "K", coordinate_K3x, coordinate_K3y);
 
 
         planszapoziom[komputer1.x][komputer1.y] = komputer1.name;
         planszapoziom[komputer2.x][komputer2.y] = komputer1.name;
+        planszapoziom[komputer3.x][komputer3.y] = komputer1.name;
         planszapoziom[gracz.x][gracz.y] = gracz.name;
 
 //        TEST
@@ -68,9 +79,10 @@ public class Board {
 
         int komputer1_ruch;
         int komputer2_ruch;
+        int komputer3_ruch;
         int decyzja;
 
-        while (komputer1.life) {
+        while (komputer1.life || komputer2.life || komputer3.life) {
 
             decyzja = move.nextInt();
 
@@ -119,7 +131,7 @@ public class Board {
 
 
 
-            if (komputer1.life && komputer2.life) {
+            if (komputer1.life) {
                 komputer1_ruch = coordinates.nextInt(4);
                 System.out.println(komputer1_ruch);
 
@@ -216,6 +228,59 @@ public class Board {
                 }
 
             }
+            ///////////////////////////////////////////////////////
+            if (komputer3.x == gracz.x && komputer3.y == gracz.y) {
+                komputer3.death();
+                System.out.println("zabiłeś komuter3");
+
+            }
+            else {
+
+
+
+                if (komputer3.life) {
+                    komputer3_ruch = coordinates.nextInt(4);
+                    System.out.println(komputer3_ruch);
+
+
+                    if (komputer3_ruch == 1) {
+
+                        planszapoziom[komputer3.x][komputer3.y] = null;
+                        komputer3.up();
+                        if (komputer3.x < 0 || komputer3.x > 7 || komputer3.y < 0 || komputer3.y > 7) {
+                            komputer3.down();
+                        }
+                    }
+
+                    else if (komputer3_ruch == 2) {
+                        planszapoziom[komputer3.x][komputer3.y] = null;
+                        komputer3.down();
+                        if (komputer3.x < 0 || komputer3.x > 7 || komputer3.y < 0 || komputer3.y > 7) {
+                            komputer3.up();
+                        }
+                    }
+                    else if (komputer3_ruch == 3) {
+                        planszapoziom[komputer3.x][komputer3.y] = null;
+                        komputer3.left();
+                        if (komputer3.x < 0 || komputer3.x > 7 || komputer3.y < 0 || komputer3.y > 7) {
+                            komputer3.right();
+                        }
+                    }
+                    else if (komputer3_ruch == 0) {
+                        planszapoziom[komputer3.x][komputer3.y] = null;
+                        komputer3.right();
+                        if (komputer3.x < 0 || komputer3.x > 7 || komputer3.y < 0 || komputer3.y > 7) {
+                            komputer3.left();
+                        }
+
+                    }
+                    else {
+                        System.out.println("komputer3 umarł");
+                    }
+                    planszapoziom[komputer3.x][komputer3.y] = komputer3.name;
+                }
+
+            }
                 ///////TEST
 //                for (int i = 0; i < planszapoziom.length; i++) {
 //
@@ -232,7 +297,8 @@ public class Board {
                 ////////TEST
                 System.out.println("test pozycja gracza " + gracz.x + " " + gracz.y);
                 System.out.println("test pozycja komputera1 lub miejsce śmierci " + komputer1.x + " " + komputer1.y);
-                System.out.println("test pozycja komputera2 lub miejsce śmierci" + komputer2.x + " " + komputer2.y);
+                System.out.println("test pozycja komputera2 lub miejsce śmierci " + komputer2.x + " " + komputer2.y);
+                System.out.println("test pozycja komputera3 lub miejsce śmierci " + komputer3.x + " " + komputer3.y);
 
 
             planszapoziom[gracz.x][gracz.y] = gracz.name;
